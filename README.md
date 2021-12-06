@@ -1,5 +1,5 @@
 
-In today's world of Major League Baseball we tend to see pitchers with higher velocities then what we were used to ten years ago. Could this be from an increase in focus on biomechanics? Could it be from even more specialized training than before? Or, is our memories deceiving us and increased velocity isn't real?
+In today's world of Major League Baseball we tend to see pitchers with higher velocities then what we were used to ten years ago. Could this be from an increase in focus on biomechanics? Could it be from even more specialized training than before? Or, are our memories deceiving us and increased velocity isn't real?
 
 It would seem that MLB's focus on increased velocities stems from increased focus on both biomechanics and specialized training. This is proven with programs such as Driveline Baseball which has a significant roll in using biomechanics and data analytics to implement their training programs. However, could this increased focus on velocity be having a negative effect on control? Could increased velocity lead to more hit by pitches? More base on balls? More losses than wins?
 
