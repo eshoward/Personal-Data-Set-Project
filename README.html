@@ -171,13 +171,69 @@ pre code {
 <p>In today’s world of Major League Baseball we tend to see pitchers with higher velocities then what we were used to ten years ago. Could this be from an increase in focus on biomechanics? Could it be from even more specialized training than before? Or, are our memories deceiving us and increased velocity isn’t real?</p>
 <p>It would seem that MLB’s focus on increased velocities stems from increased focus on both biomechanics and specialized training. This is proven with programs such as Driveline Baseball which has a significant roll in using biomechanics and data analytics to implement their training programs. However, could this increased focus on velocity be having a negative effect on control? Could increased velocity lead to more hit by pitches? More base on balls? More losses than wins?</p>
 <p>The data collecting, cleaning, and transforming were all fairly simple. I downloaded the CSV from <a href="https://www.fangraphs.com/" class="uri">https://www.fangraphs.com/</a>. From the homepage of fangraphs I clicked on Team Stats. From there I went down to the Multiple Seasons and entered 2007 to 2020. I then went down to the Custom Leaderboards and created my own Leaderboard by selecting the columns Season, Team, Win, Loss, ERA, Base_on_Balls, HBP, WP, Balls, Strikes, K/9, BB/9, K/BB, and Velo. After looking at the data I realized that I wanted to get rid of the 2020 season where there were only 60 games played. I chose to do this because only 60 games played is a outlier to the regular 162 game season. In doing this I chose to only use odd numbered years in the data starting with 2009 and ending with 2021.</p>
-<p>’’’{r} library(tidyverse) library(knitr) library(readxl) install.packages(“reshape2”) library(reshape2) fullstats &lt;- read_excel(“full_stats07-21.xlsx”)</p>
-<p>fb21 &lt;- fullstats %&gt;% filter(Season==“2021”) fb20 &lt;- fullstats %&gt;% filter(Season==“2020”) fb19 &lt;- fullstats %&gt;% filter(Season==“2019”) fb18 &lt;- fullstats %&gt;% filter(Season==“2018”) fb17 &lt;- fullstats %&gt;% filter(Season==“2017”) fb16 &lt;- fullstats %&gt;% filter(Season==“2016”) fb15 &lt;- fullstats %&gt;% filter(Season==“2015”) fb14 &lt;- fullstats %&gt;% filter(Season==“2014”) fb13 &lt;- fullstats %&gt;% filter(Season==“2013”) fb12 &lt;- fullstats %&gt;% filter(Season==“2012”) fb11 &lt;- fullstats %&gt;% filter(Season==“2011”) fb10 &lt;- fullstats %&gt;% filter(Season==“2010”) fb09&lt;- fullstats %&gt;% filter(Season==“2009”) fb08 &lt;- fullstats %&gt;% filter(Season==“2008”) fb07 &lt;- fullstats %&gt;% filter(Season==“2007”)</p>
-<p>mean &lt;- round(c(mean(fb21<span class="math inline">\(`velo`),mean(fb19\)</span><code>velo</code>),mean(fb17<span class="math inline">\(`velo`),  mean(fb15\)</span><code>velo</code>),mean(fb13<span class="math inline">\(`velo`), mean(fb11\)</span><code>velo</code>), mean(fb09$<code>velo</code>)),2) season &lt;- c(“’21”,“’19”,“’17”,“’15”,“’13”,“’11”,“’09”) mean_df &lt;- data.frame(season,mean)</p>
-<p>hbp_mean &lt;- round(c(mean(fb21<span class="math inline">\(HBP),mean(fb19\)</span>HBP), mean(fb17<span class="math inline">\(HBP),  mean(fb15\)</span>HBP),mean(fb13<span class="math inline">\(HBP),  mean(fb11\)</span>HBP), mean(fb09$HBP)),2) season &lt;- c(“’21”,“’19”,“’17”,“’15”,“’13”,“’11”,“’09”) hbpmean_df &lt;- data.frame(season, hbp_mean)</p>
-<p>ggplot(mean_df, aes(season,mean, group=1))+ geom_point(colour=“orange”)+geom_line(size=1.4, colour=“orange”)+ xlab(“Season”)+ylab(“Velocity”)+ ggtitle(“Avg. Fastball Velocity per Season”)+theme_bw()</p>
-<p>ggplot(hbpmean_df, aes(season, hbp_mean, group=1))+ geom_point(colour=“blue”)+geom_line(size=1.4, colour=“blue”)+ xlab(“Season”)+ylab(“Avg. Hit by Pitch”)+ ggtitle(“Avg. Hit by Pitch per Season”)+theme_bw()</p>
-<p>linear &lt;- lm(mean~ hbp_mean) summary(linear) ’’’</p>
+<pre class="{r}"><code>library(tidyverse)
+library(knitr)
+library(readxl)
+
+fullstats &lt;- read_excel(&quot;~/Documents/GitHub/Personal-Data-Set-Project/full_stats07-21.xlsx&quot;)
+
+fb21 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2021&quot;)
+fb20 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2020&quot;)
+fb19 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2019&quot;)
+fb18 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2018&quot;)
+fb17 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2017&quot;)
+fb16 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2016&quot;)
+fb15 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2015&quot;)
+fb14 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2014&quot;)
+fb13 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2013&quot;)
+fb12 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2012&quot;)
+fb11 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2011&quot;)
+fb10 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2010&quot;)
+fb09&lt;- fullstats %&gt;%
+  filter(Season==&quot;2009&quot;)
+fb08 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2008&quot;)
+fb07 &lt;- fullstats %&gt;%
+  filter(Season==&quot;2007&quot;)
+
+mean &lt;- round(c(mean(fb21$`velo`),mean(fb19$`velo`),mean(fb17$`velo`),
+          mean(fb15$`velo`),mean(fb13$`velo`), mean(fb11$`velo`),
+          mean(fb09$`velo`)),2)
+season &lt;- c(&quot;&#39;21&quot;,&quot;&#39;19&quot;,&quot;&#39;17&quot;,&quot;&#39;15&quot;,&quot;&#39;13&quot;,&quot;&#39;11&quot;,&quot;&#39;09&quot;)
+mean_df &lt;- data.frame(season,mean)
+
+hbp_mean &lt;- round(c(mean(fb21$HBP),mean(fb19$HBP),
+                    mean(fb17$HBP),
+                    mean(fb15$HBP),mean(fb13$HBP),
+                    mean(fb11$HBP),
+                    mean(fb09$HBP)),2)
+season &lt;- c(&quot;&#39;21&quot;,&quot;&#39;19&quot;,&quot;&#39;17&quot;,&quot;&#39;15&quot;,&quot;&#39;13&quot;,&quot;&#39;11&quot;,&quot;&#39;09&quot;)
+hbpmean_df &lt;- data.frame(season, hbp_mean)
+
+ggplot(mean_df, aes(season,mean, group=1))+
+  geom_point(colour=&quot;orange&quot;)+geom_line(size=1.4, colour=&quot;orange&quot;)+
+  xlab(&quot;Season&quot;)+ylab(&quot;Velocity&quot;)+
+  ggtitle(&quot;Avg. Fastball Velocity per Season&quot;)+theme_bw()
+
+ggplot(hbpmean_df, aes(season, hbp_mean, group=1))+
+  geom_point(colour=&quot;blue&quot;)+geom_line(size=1.4, colour=&quot;blue&quot;)+
+  xlab(&quot;Season&quot;)+ylab(&quot;Avg. Hit by Pitch&quot;)+
+  ggtitle(&quot;Avg. Hit by Pitch per Season&quot;)+theme_bw()
+
+linear &lt;- lm(mean~ hbp_mean)
+summary(linear)</code></pre>
 
 
 

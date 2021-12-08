@@ -10,6 +10,7 @@ It would seem that MLB's focus on increased velocities stems from increased focu
 
 The data collecting, cleaning, and transforming were all fairly simple. I downloaded the CSV from https://www.fangraphs.com/. From the homepage of fangraphs I clicked on Team Stats. From there I went down to the Multiple Seasons and entered 2007 to 2020. I then went down to the Custom Leaderboards and created my own Leaderboard by selecting the columns Season, Team, Win, Loss, ERA, Base_on_Balls, HBP, WP, Balls, Strikes, K/9, BB/9, K/BB, and Velo. After looking at the data I realized that I wanted to get rid of the 2020 season where there were only 60 games played. I chose to do this because only 60 games played is a outlier to the regular 162 game season. In doing this I chose to only use odd numbered years in the data starting with 2009 and ending with 2021.
 
+```{r}
 library(tidyverse)
 library(knitr)
 library(readxl)
